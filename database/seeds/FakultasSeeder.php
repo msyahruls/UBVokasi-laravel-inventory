@@ -12,10 +12,25 @@ class FakultasSeeder extends Seeder
      */
     public function run()
     {
-        $listFakultas = ['Filkom', 'Vokasi', 'Hukum'];
+        $listFakultas = [
+            'Ekonomi Bisnis',
+            'Hukum',
+            'Ilmu Administrasi',
+            'Ilmu Budaya',
+            'Ilmu Kelautan',
+            'Ilmu Komputer',
+            'Ilmu Sosial dan Ilmu Politik',
+            'Kedokteran',
+            'Matematika dan Ilmu Pengetahuan Alam',
+            'Pendidikan Vokasi',
+            'Pertanian',
+            'Peternakan',
+            'Teknik',
+            'Teknologi Pertanian'
+        ];
 
         foreach ($listFakultas as $fakultas) {
-        	Fakultas::create(['name' => $fakultas, 'photo' => 'dummy.png']);
+        	Fakultas::create(['name' => $fakultas]);
         }
     }
 }

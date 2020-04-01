@@ -11,8 +11,13 @@
 |
 */
 
-Route::get('fakultas', ['as' => 'fakultas.index', 'uses' => 'FakultasController@index']);
 
 Route::get('/', function () {
-    return view('fakultas.index');
+    return view('welcome');
 });
+
+// Route::get('fakultas', ['as' => 'fakultas.index', 'uses' => 'FakultasController@index']);
+Route::resource('fakultas', 'FakultasController');
+Route::resource('jurusan', 'JurusanController');
+Route::resource('ruangan', 'RuanganController');
+Route::resource('barang', 'BarangController');

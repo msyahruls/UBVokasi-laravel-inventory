@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Ruangan;
 use Illuminate\Http\Request;
-use App\Fakultas;
 
-class FakultasController extends Controller
+class RuanganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,11 @@ class FakultasController extends Controller
     {
         //pagination
         // numbering
-        $data = Fakultas::when($request->search, function($query) use($request){
+        $data = Ruangan::when($request->search, function($query) use($request){
             $query->where('name', 'LIKE', '%'.$request->search.'%');
         })->get();
 
-        return view('fakultas.index', compact('data'));
+        return view('ruangan.index', compact('data'));
     }
 
     /**
@@ -47,10 +47,10 @@ class FakultasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ruangan $ruangan)
     {
         //
     }
@@ -58,10 +58,10 @@ class FakultasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ruangan $ruangan)
     {
         //
     }
@@ -70,10 +70,10 @@ class FakultasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ruangan $ruangan)
     {
         //
     }
@@ -81,10 +81,10 @@ class FakultasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ruangan $ruangan)
     {
         //
     }
