@@ -19,7 +19,7 @@ class JurusanController extends Controller
         // numbering
 
         $data = Jurusan::when($request->search, function($query) use($request){
-            $query->where('jurusan.name', 'LIKE', '%'.$request->search.'%');})
+            $query->where('fakultas.name', 'LIKE', '%'.$request->search.'%');})
             ->join('fakultas', 'fakultas.id', '=', 'jurusan.fakultas_id')
             ->select('fakultas.name AS fakultas_name', 'jurusan.*')
             ->orderBy('name','asc')->paginate(10);
