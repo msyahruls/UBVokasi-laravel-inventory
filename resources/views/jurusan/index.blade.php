@@ -4,7 +4,7 @@
 <section class="section">
   
   <div class="section-header">
-    <h1>Fakultas</h1>
+    <h1>Jurusan</h1>
   </div>
 
   <div class="section-body">
@@ -19,12 +19,12 @@
                 <button type="submit" class="btn btn-primary">Search</button>
               </div>
             </form>
-            <a href="{{ route('fakultas.index') }}" class="pull-right">
+            <a href="{{ route('jurusan.index') }}" class="pull-right">
               <button type="button" class="btn btn-info">All Data</button>
             </a>
           </div>
           <div class="card-header">
-            <a href="">
+            <a href="{{ route('jurusan.create') }}">
               <button type="button" class="btn btn-primary">Add New</button>
             </a>
           </div>
@@ -34,15 +34,26 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Faculcity</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-               @forelse($data as $fakultas)
+               @forelse($data as $jurusan)
                 <tr>
-                  <td></td>
-                  <td>{{ $fakultas->name }}</td>
-                  <td>Edit | Hapus</td>
+                  <td>{{ ++$i }}</td>
+                  <td>{{ $jurusan->name }}</td>
+                  <td>{{ $jurusan->fakultas_name }}</td>
+                  <td>
+                    <form action="{{ route('jurusan.destroy', $jurusan->id) }}" method="POST">
+                      <a href="{{ route('jurusan.edit', $jurusan->id) }}">
+                        <button type="button" class="btn btn-sm btn-info">Edit</button>
+                      </a>
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete data?');">Hapus</button>
+                    </form>
+                  </td>
                 </tr>
                @empty
                 <tr>
@@ -54,7 +65,7 @@
           </div>
           <div class="card-footer text-right">
             <nav class="d-inline-block">
-              
+              {!! $data->appends(request()->except('page'))->render() !!}
             </nav>
           </div>
         </div>

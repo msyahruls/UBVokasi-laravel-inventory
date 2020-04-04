@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jurusan;
+use App\Fakultas;
 use Illuminate\Http\Request;
 
 class JurusanController extends Controller
@@ -16,11 +17,15 @@ class JurusanController extends Controller
     {
         //pagination
         // numbering
-        $data = Jurusan::when($request->search, function($query) use($request){
-            $query->where('name', 'LIKE', '%'.$request->search.'%');
-        })->get();
 
-        return view('jurusan.index', compact('data'));
+        $data = Jurusan::when($request->search, function($query) use($request){
+            $query->where('jurusan.name', 'LIKE', '%'.$request->search.'%');})
+            ->join('fakultas', 'fakultas.id', '=', 'jurusan.fakultas_id')
+            ->select('fakultas.name AS fakultas_name', 'jurusan.*')
+            ->orderBy('name','asc')->paginate(10);
+
+        return view('jurusan.index',compact('data'))
+            ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -30,7 +35,8 @@ class JurusanController extends Controller
      */
     public function create()
     {
-        //
+        $data = Fakultas::all();
+        return view('jurusan.create',compact('data'));
     }
 
     /**
@@ -41,7 +47,15 @@ class JurusanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'fakultas_id' => 'required',
+        ]);
+  
+        Jurusan::create($request->all());
+   
+        return redirect()->route('jurusan.index')
+                        ->with('success','Jurusan created successfully.');
     }
 
     /**
@@ -61,9 +75,11 @@ class JurusanController extends Controller
      * @param  \App\Jurusan  $jurusan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Jurusan $jurusan)
+    public function edit($id)
     {
-        //
+        $data = Jurusan::find($id);
+        $fakultas = Fakultas::all();
+        return view('jurusan.edit',compact('data'))->with('fakultas', $fakultas);
     }
 
     /**
@@ -73,9 +89,15 @@ class JurusanController extends Controller
      * @param  \App\Jurusan  $jurusan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jurusan $jurusan)
+    public function update(Request $request, $id)
     {
-        //
+        $form_data = array(
+            'name'      =>  $request->name,
+            'fakultas_id'  =>  $request->fakultas_id
+        );
+
+        Jurusan::whereId($id)->update($form_data);
+        return redirect()->route('jurusan.index');
     }
 
     /**
@@ -84,8 +106,10 @@ class JurusanController extends Controller
      * @param  \App\Jurusan  $jurusan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jurusan $jurusan)
+    public function destroy($id)
     {
-        //
+        Jurusan::whereId($id)->delete();
+
+        return redirect()->route('jurusan.index');
     }
 }

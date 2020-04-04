@@ -24,7 +24,7 @@
             </a>
           </div>
           <div class="card-header">
-            <a href="">
+            <a href="{{ route('fakultas.create') }}">
               <button type="button" class="btn btn-primary">Add New</button>
             </a>
           </div>
@@ -40,9 +40,18 @@
               <tbody>
                @forelse($data as $fakultas)
                 <tr>
-                  <td></td>
+                  <td>{{ ++$i }}</td>
                   <td>{{ $fakultas->name }}</td>
-                  <td>Edit | Hapus</td>
+                  <td>
+                    <form action="{{ route('fakultas.destroy', $fakultas->id) }}" method="POST">
+                      <a href="{{ route('fakultas.edit', $fakultas->id) }}">
+                        <button type="button" class="btn btn-sm btn-info">Edit</button>
+                      </a>
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete data?');">Hapus</button>
+                    </form>
+                  </td>
                 </tr>
                @empty
                 <tr>
@@ -54,7 +63,7 @@
           </div>
           <div class="card-footer text-right">
             <nav class="d-inline-block">
-              
+              {!! $data->appends(request()->except('page'))->render() !!}
             </nav>
           </div>
         </div>

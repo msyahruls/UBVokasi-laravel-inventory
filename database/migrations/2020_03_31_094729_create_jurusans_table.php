@@ -15,7 +15,11 @@ class CreateJurusansTable extends Migration
     {
         Schema::create('jurusan', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('fakultas_id')->index()->unsigned()->nullable();
+            $table->string('name', 50);
             $table->timestamps();
+
+            $table->foreign('fakultas_id')->references('id')->on('fakultas')->onDelete('cascade');
         });
     }
 
@@ -27,5 +31,9 @@ class CreateJurusansTable extends Migration
     public function down()
     {
         Schema::dropIfExists('jurusan');
+        Schema::table('jurusan', function(Blueprint $table){
+            $table->dropForeign('jurusan_fakultas_id_foreign');
+            $table->dropColumn('fakultas_id');
+        });
     }
 }
