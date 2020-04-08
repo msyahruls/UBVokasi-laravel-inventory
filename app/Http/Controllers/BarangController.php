@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
+use App\Ruangan;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -17,10 +18,14 @@ class BarangController extends Controller
         //pagination
         // numbering
         $data = Barang::when($request->search, function($query) use($request){
-            $query->where('name', 'LIKE', '%'.$request->search.'%');
-        })->get();
+            $query->where('ruangan.name', 'LIKE', '%'.$request->search.'%');})
+            ->join('ruangan', 'ruangan.id', '=', 'barang.ruangan_id')
+            ->select('ruangan.name AS ruangan_name', 'barang.*')
+            ->orderBy('ruangan.name','asc')
+            ->orderBy('barang.name','asc')->paginate(10); 
 
-        return view('barang.index', compact('data'));
+        return view('barang.index',compact('data'))
+            ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**

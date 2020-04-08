@@ -16,11 +16,11 @@
                 <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request()->get('search') }}">
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-light">Search</button>
               </div>
             </form>
             <a href="{{ route('fakultas.index') }}" class="pull-right">
-              <button type="button" class="btn btn-info">All Data</button>
+              <button type="button" class="btn btn-outline-info">All Data</button>
             </a>
           </div>
           <div class="card-header">
@@ -34,22 +34,22 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Jurusan</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
                @forelse($data as $fakultas)
                 <tr>
-                  <td>{{ ++$i }}</td>
+                  <td width="5%">{{ ++$i }}</td>
                   <td>{{ $fakultas->name }}</td>
-                  <td>
+                  <td width="5%">{{ $fakultas->jurusan->count() }}</td>
+                  <td width="15%">
                     <form action="{{ route('fakultas.destroy', $fakultas->id) }}" method="POST">
-                      <a href="{{ route('fakultas.edit', $fakultas->id) }}">
-                        <button type="button" class="btn btn-sm btn-info">Edit</button>
-                      </a>
+                      <a class="btn btn-sm btn-warning view_modal color" href="{{ route('fakultas.edit', $fakultas->id) }}"><i class="fas fa-pen"></i></a>
                       @csrf
                       @method('DELETE')
-                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete data?');">Hapus</button>
+                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete data?');"><i class="fas fa-trash"></i></button>
                     </form>
                   </td>
                 </tr>

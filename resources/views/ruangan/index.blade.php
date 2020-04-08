@@ -4,7 +4,7 @@
 <section class="section">
   
   <div class="section-header">
-    <h1>Fakultas</h1>
+    <h1>Ruangan</h1>
   </div>
 
   <div class="section-body">
@@ -16,15 +16,15 @@
                 <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request()->get('search') }}">
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-light">Search</button>
               </div>
             </form>
-            <a href="{{ route('fakultas.index') }}" class="pull-right">
-              <button type="button" class="btn btn-info">All Data</button>
+            <a href="{{ route('ruangan.index') }}" class="pull-right">
+              <button type="button" class="btn btn-outline-info">All Data</button>
             </a>
           </div>
           <div class="card-header">
-            <a href="">
+            <a href="{{ route('ruangan.create') }}">
               <button type="button" class="btn btn-primary">Add New</button>
             </a>
           </div>
@@ -34,15 +34,24 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Jurusan</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-               @forelse($data as $fakultas)
+               @forelse($data as $ruangan)
                 <tr>
-                  <td></td>
-                  <td>{{ $fakultas->name }}</td>
-                  <td>Edit | Hapus</td>
+                  <td width="5%">{{ ++$i }}</td>
+                  <td>{{ $ruangan->name }}</td>
+                  <td width="45%">{{ $ruangan->jurusan_name }}</td>
+                  <td width="15%">
+                    <form action="{{ route('ruangan.destroy', $ruangan->id) }}" method="POST">
+                      <a class="btn btn-sm btn-warning view_modal color" href="{{ route('ruangan.edit', $ruangan->id) }}"><i class="fas fa-pen"></i></a>
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete data?');"><i class="fas fa-trash"></i></button>
+                    </form>
+                  </td>
                 </tr>
                @empty
                 <tr>
@@ -54,7 +63,7 @@
           </div>
           <div class="card-footer text-right">
             <nav class="d-inline-block">
-              
+              {!! $data->appends(request()->except('page'))->render() !!}
             </nav>
           </div>
         </div>

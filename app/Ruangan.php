@@ -8,5 +8,5 @@ class Ruangan extends Model
 {
     protected $table = 'ruangan';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name','jurusan_id'];
 }

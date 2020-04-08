@@ -22,7 +22,8 @@ class JurusanController extends Controller
             $query->where('fakultas.name', 'LIKE', '%'.$request->search.'%');})
             ->join('fakultas', 'fakultas.id', '=', 'jurusan.fakultas_id')
             ->select('fakultas.name AS fakultas_name', 'jurusan.*')
-            ->orderBy('name','asc')->paginate(10);
+            ->orderBy('fakultas.name','asc')
+            ->orderBy('jurusan.name','asc')->paginate(10);
 
         return view('jurusan.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);

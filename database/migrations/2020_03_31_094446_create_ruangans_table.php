@@ -15,8 +15,11 @@ class CreateRuangansTable extends Migration
     {
         Schema::create('ruangan', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('jurusan_id')->index()->unsigned()->nullable();
             $table->string('name', 50);
             $table->timestamps();
+
+            $table->foreign('jurusan_id')->references('id')->on('jurusan')->onDelete('cascade');
         });
     }
 
@@ -28,5 +31,9 @@ class CreateRuangansTable extends Migration
     public function down()
     {
         Schema::dropIfExists('ruangan');
+        Schema::table('ruangan', function(Blueprint $table){
+            $table->dropForeign('ruangan_jurusan_id_foreign`');
+            $table->dropColumn('jurusan_id');
+        });
     }
 }

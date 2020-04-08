@@ -15,9 +15,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::get('fakultas', ['as' => 'fakultas.index', 'uses' => 'FakultasController@index']);
-Route::resource('fakultas', 'FakultasController');
-Route::resource('jurusan', 'JurusanController');
-Route::resource('ruangan', 'RuanganController');
-Route::resource('barang', 'BarangController');
+Auth::routes();
+
+Route::group(['middleware' => 'auth'], function(){
+	Route::group(['middleware' => 'admin.only'], function(){
+		Route::resource('fakultas', 'FakultasController');
+		Route::resource('jurusan', 'JurusanController');
+		Route::resource('ruangan', 'RuanganController');
+		Route::resource('barang', 'BarangController');
+	});
+	Route::resource('barang', 'BarangController', ['only' => ['index','edit','update']]);
+	Route::get('dashboard', function () {
+	    return view('dashboard.index');
+	})->name('dashboard');
+});
+

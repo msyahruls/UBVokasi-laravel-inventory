@@ -16,11 +16,11 @@
                 <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request()->get('search') }}">
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-light">Search</button>
               </div>
             </form>
             <a href="{{ route('jurusan.index') }}" class="pull-right">
-              <button type="button" class="btn btn-info">All Data</button>
+              <button type="button" class="btn btn-outline-info">All Data</button>
             </a>
           </div>
           <div class="card-header">
@@ -39,23 +39,21 @@
                 </tr>
               </thead>
               <tbody>
-               @forelse($data as $jurusan)
+                 @forelse($data as $jurusan)
                 <tr>
                   <td>{{ ++$i }}</td>
                   <td>{{ $jurusan->name }}</td>
                   <td>{{ $jurusan->fakultas_name }}</td>
-                  <td>
+                  <td width="15%">
                     <form action="{{ route('jurusan.destroy', $jurusan->id) }}" method="POST">
-                      <a href="{{ route('jurusan.edit', $jurusan->id) }}">
-                        <button type="button" class="btn btn-sm btn-info">Edit</button>
-                      </a>
+                      <a class="btn btn-sm btn-warning view_modal color" href="{{ route('jurusan.edit', $jurusan->id) }}"><i class="fas fa-pen"></i></a>
                       @csrf
                       @method('DELETE')
-                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete data?');">Hapus</button>
+                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete data?');"><i class="fas fa-trash"></i></button>
                     </form>
                   </td>
                 </tr>
-               @empty
+                @empty
                 <tr>
                   <td colspan="3"><center>Data kosong</center></td>
                 </tr>

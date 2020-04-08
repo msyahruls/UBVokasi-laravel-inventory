@@ -13,24 +13,33 @@ class RuanganSeeder extends Seeder
     public function run()
     {
         $listRuangan = [
-            'R203',
-            'R204',
-            'R205',
-            'R206',
-            'R207',
-            'R208',
-            'R209',
-            'R303',
-            'R304',
-            'R305',
-            'R306',
-            'R307',
-            'R308',
-            'R309',
+            ['name' => 'R101',          'jurusan_id' => '1'],
+            ['name' => 'R102',          'jurusan_id' => '1'],
+            ['name' => 'R103',          'jurusan_id' => '1'],
+
+            ['name' => 'R201',          'jurusan_id' => '2'],
+            ['name' => 'R202',          'jurusan_id' => '2'],
+            ['name' => 'R203',          'jurusan_id' => '2'],
+
+            ['name' => 'R Praktek 1',   'jurusan_id' => '3'],
+            ['name' => 'R Teori 2',     'jurusan_id' => '3'],
+            ['name' => 'R Teori 3',     'jurusan_id' => '3'],
+
+            ['name' => 'R501',          'jurusan_id' => '4'],
+            ['name' => 'R502',          'jurusan_id' => '4'],
+
+            ['name' => 'R Lab',         'jurusan_id' => '5'],
+            ['name' => 'R Teori',       'jurusan_id' => '5'],
+            ['name' => 'R Gudang',      'jurusan_id' => '5'],
+
+            ['name' => 'R67',           'jurusan_id' => '6'],
+            ['name' => 'R68',           'jurusan_id' => '6'],
+            ['name' => 'R69',           'jurusan_id' => '6']
+
         ];
 
         foreach ($listRuangan as $ruangan) {
-        	Ruangan::create(['name' => $ruangan]);
+        	Ruangan::create($ruangan);
         }
     }
 }
