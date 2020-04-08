@@ -37,6 +37,8 @@
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">Ruangan</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Broken</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -46,6 +48,8 @@
                   <td width="5%">{{ ++$i }}</td>
                   <td>{{ $barang->name }}</td>
                   <td width="35%">{{ $barang->ruangan_name }}</td>
+                  <td width="5%">{{ $barang->total }}</td>
+                  <td width="5%">{{ $barang->broken }}</td>
                   <td width="15%">
                     <form action="{{ route('barang.destroy', $barang->id) }}" method="POST">
                     <a class="btn btn-sm btn-warning view_modal color" href="{{ route('barang.edit', $barang->id) }}"><i class="fas fa-pen"></i></a>
