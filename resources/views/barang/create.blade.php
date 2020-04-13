@@ -11,19 +11,37 @@
     <div class="col-12 col-md-6 col-lg-6">
         <div class="card">
           <div class="card-header">
-            <a href="{{ route('categories.index') }}"> 
+            <a href="{{ route('barang.index') }}"> 
               <button type="button" class="btn btn-outline-info">
                 <i class="fas fa-arrow-circle-left"></i> Back
               </button>
           </a>
           </div>
           <div class="card-body">
-            <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
                 <label>Name</label>
                 <input type="text" name="name" class="form-control">
               </div>
+              <div class="form-group">
+                  <label>Ruangan</label>
+                  <select class="form-control" name="ruangan_id">
+                    @foreach($data as $ruangan)
+                      <option value="{{ $ruangan->id }}">{{ $ruangan->name }}</option>
+                    @endforeach
+                  </select>
+              </div>
+              <div class="form-group">
+                <label>Total</label>
+                <input type="number" name="total" class="form-control" min="0" value="0">
+              </div>
+              <div class="form-group">
+                <label>Broken</label>
+                <input type="number" name="broken" class="form-control" min="0" value="0">
+              </div>
+              <input type="hidden" name="created_by" class="form-control" value="{{ auth()->user()->id }}">
+              <input type="hidden" name="updated_by" class="form-control" value="{{ auth()->user()->id }}">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary">SAVE</button>
               </div>

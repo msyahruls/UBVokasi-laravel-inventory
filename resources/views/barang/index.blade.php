@@ -23,16 +23,16 @@
               <button type="button" class="btn btn-outline-info">All Data</button>
             </a>
           </div>
-          @if(auth()->user()->role == 'admin')
           <div class="card-header">
+          @if(auth()->user()->role == 'admin')
             <a href="{{ route('barang.create') }}">
               <button type="button" class="btn btn-primary">Add New</button>
             </a>
+          @endif
             <div  class="col-12 col-md-3 col-lg-3">
               <a class="btn btn-success" href="{{ url('barang/export') }}">Export Data</a>
             </div>
           </div>
-          @endif
           <div class="card-body">
             <table class="table table-bordered">
               <thead>

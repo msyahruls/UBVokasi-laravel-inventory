@@ -27,8 +27,6 @@ class BarangController extends Controller
             ->orderBy('barang.name','asc')
             ->with('ruangan')->with('create_by')->with('update_by')->paginate(10);
 
-        // print($data);
-
         return view('barang.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
@@ -40,7 +38,8 @@ class BarangController extends Controller
      */
     public function create()
     {
-        return view('barang.create');
+        $data = Ruangan::all();
+        return view('barang.create',compact('data'));
     }
 
     /**
@@ -51,7 +50,19 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'name' => 'required',
+            'ruangan_id' => 'required',
+            'total' => 'required',
+            'broken' => 'required',
+            'created_by' => 'required',
+            'updated_by' => 'required'
+        ]);
+
+        Barang::create($request->all());
+   
+        return redirect()->route('barang.index')
+                        ->with('success','Barang created successfully.');
     }
 
     /**
@@ -71,9 +82,11 @@ class BarangController extends Controller
      * @param  \App\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function edit(Barang $barang)
+    public function edit($id)
     {
-        return view('barang.edit');
+        $data = Barang::find($id);
+        $ruangan = Ruangan::all();
+        return view('barang.edit',compact('data','ruangan'));
     }
 
     /**
@@ -83,9 +96,18 @@ class BarangController extends Controller
      * @param  \App\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Barang $barang)
+    public function update(Request $request, $id)
     {
-        //
+        $form_data = array(
+            'name'          =>  $request->name,
+            'ruangan_id'    =>  $request->ruangan_id,
+            'total'         =>  $request->total,
+            'broken'        =>  $request->broken,
+            'updated_by'    =>  $request->updated_by
+        );
+
+        Barang::whereId($id)->update($form_data);
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -94,9 +116,10 @@ class BarangController extends Controller
      * @param  \App\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Barang $barang)
+    public function destroy($id)
     {
-        //
+        Barang::whereId($id)->delete();
+        return redirect()->route('barang.index');
     }
 
     public function export()

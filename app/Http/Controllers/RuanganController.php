@@ -21,8 +21,7 @@ class RuanganController extends Controller
             $query->where('jurusan.name', 'LIKE', '%'.$request->search.'%');})
             ->join('jurusan', 'jurusan.id', '=', 'ruangan.jurusan_id')
             ->select('jurusan.name AS jurusan_name', 'ruangan.*')
-            ->orderBy('jurusan.name','asc')
-            ->orderBy('ruangan.name','asc')->
+            ->orderBy('jurusan.name','asc')->orderBy('ruangan.name','asc')
             ->with('jurusan')->paginate(10); 
 
         return view('ruangan.index',compact('data'))
@@ -110,7 +109,6 @@ class RuanganController extends Controller
     public function destroy($id)
     {
         Ruangan::whereId($id)->delete();
-
         return redirect()->route('ruangan.index');
     }
 }
