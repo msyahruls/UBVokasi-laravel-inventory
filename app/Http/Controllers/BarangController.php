@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Barang;
 use App\Ruangan;
+use App\Exports\BarangExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -22,7 +24,10 @@ class BarangController extends Controller
             ->join('ruangan', 'ruangan.id', '=', 'barang.ruangan_id')
             ->select('ruangan.name AS ruangan_name', 'barang.*')
             ->orderBy('ruangan.name','asc')
-            ->orderBy('barang.name','asc')->paginate(10); 
+            ->orderBy('barang.name','asc')
+            ->with('ruangan')->with('create_by')->with('update_by')->paginate(10);
+
+        // print($data);
 
         return view('barang.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
@@ -35,7 +40,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        //
+        return view('barang.create');
     }
 
     /**
@@ -68,7 +73,7 @@ class BarangController extends Controller
      */
     public function edit(Barang $barang)
     {
-        //
+        return view('barang.edit');
     }
 
     /**
@@ -92,5 +97,10 @@ class BarangController extends Controller
     public function destroy(Barang $barang)
     {
         //
+    }
+
+    public function export()
+    {
+        return Excel::download(new BarangExport, 'barang-'.date("Y-m-d").'.xlsx');
     }
 }

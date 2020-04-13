@@ -28,6 +28,9 @@
             <a href="{{ route('barang.create') }}">
               <button type="button" class="btn btn-primary">Add New</button>
             </a>
+            <div  class="col-12 col-md-3 col-lg-3">
+              <a class="btn btn-success" href="{{ url('barang/export') }}">Export Data</a>
+            </div>
           </div>
           @endif
           <div class="card-body">
@@ -39,6 +42,8 @@
                   <th scope="col">Ruangan</th>
                   <th scope="col">Total</th>
                   <th scope="col">Broken</th>
+                  <th scope="col">Created by</th>
+                  <th scope="col">Updated by</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -47,9 +52,11 @@
                 <tr>
                   <td width="5%">{{ ++$i }}</td>
                   <td>{{ $barang->name }}</td>
-                  <td width="35%">{{ $barang->ruangan_name }}</td>
+                  <td width="35%">{{ $barang->ruangan->name }}</td>
                   <td width="5%">{{ $barang->total }}</td>
                   <td width="5%">{{ $barang->broken }}</td>
+                  <td width="10%">{{ $barang->create_by->name }}</td>
+                  <td width="10%">{{ $barang->update_by->name }}</td>
                   <td width="15%">
                     <form action="{{ route('barang.destroy', $barang->id) }}" method="POST">
                     <a class="btn btn-sm btn-warning view_modal color" href="{{ route('barang.edit', $barang->id) }}"><i class="fas fa-pen"></i></a>

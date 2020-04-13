@@ -12,6 +12,6 @@ class Jurusan extends Model
 
     public function fakultas()
     {
-    	return $this->belongsTo(Jurusan::class, 'fakultas_id');
+    	return $this->belongsTo('App\Fakultas', 'fakultas_id','id');
     }
 }

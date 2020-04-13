@@ -9,4 +9,9 @@ class Ruangan extends Model
     protected $table = 'ruangan';
 
     protected $fillable = ['name','jurusan_id'];
+
+    public function jurusan()
+    {
+    	return $this->belongsTo('App\Jurusan', 'jurusan_id', 'id');
+    }
 }

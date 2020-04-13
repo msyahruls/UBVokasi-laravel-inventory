@@ -22,7 +22,8 @@ class RuanganController extends Controller
             ->join('jurusan', 'jurusan.id', '=', 'ruangan.jurusan_id')
             ->select('jurusan.name AS jurusan_name', 'ruangan.*')
             ->orderBy('jurusan.name','asc')
-            ->orderBy('ruangan.name','asc')->paginate(10); 
+            ->orderBy('ruangan.name','asc')->
+            ->with('jurusan')->paginate(10); 
 
         return view('ruangan.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);

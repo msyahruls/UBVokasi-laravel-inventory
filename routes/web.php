@@ -21,6 +21,9 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::group(['middleware' => 'admin.only'], function(){
+		Route::get('jurusan/export', 'JurusanController@export');
+		Route::get('barang/export', 'BarangController@export');
+
 		Route::resource('fakultas', 'FakultasController');
 		Route::resource('jurusan', 'JurusanController');
 		Route::resource('ruangan', 'RuanganController');

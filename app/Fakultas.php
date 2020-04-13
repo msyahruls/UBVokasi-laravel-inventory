@@ -10,7 +10,8 @@ class Fakultas extends Model
 
     protected $fillable = ['name'];
 
-    public function jurusan(){
+    public function jurusan()
+    {
     	return $this->hasMany('App\Jurusan','fakultas_id','id');
     }
 }

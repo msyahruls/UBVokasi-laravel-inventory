@@ -43,7 +43,7 @@
                 <tr>
                   <td width="5%">{{ ++$i }}</td>
                   <td>{{ $ruangan->name }}</td>
-                  <td width="45%">{{ $ruangan->jurusan_name }}</td>
+                  <td width="45%">{{ $ruangan->jurusan->name }}</td>
                   <td width="15%">
                     <form action="{{ route('ruangan.destroy', $ruangan->id) }}" method="POST">
                       <a class="btn btn-sm btn-warning view_modal color" href="{{ route('ruangan.edit', $ruangan->id) }}"><i class="fas fa-pen"></i></a>
