@@ -16,7 +16,7 @@ class AdminOnly
     public function handle($request, Closure $next)
     {
         if( auth()->user()->role != 'admin'){
-            return redirect()->route('barang.index');
+            return redirect()->route('dashboard');
         }
         return $next($request);
     }

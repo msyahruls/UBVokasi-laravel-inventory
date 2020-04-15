@@ -21,7 +21,9 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::group(['middleware' => 'admin.only'], function(){
+		Route::get('fakultas/export', 'FakultasController@export')->name('fakultas.export');
 		Route::get('jurusan/export', 'JurusanController@export')->name('jurusan.export');
+		Route::get('ruangan/export', 'RuanganController@export')->name('ruangan.export');
 		Route::get('barang/export', 'BarangController@export')->name('barang.export');
 
 		Route::resource('fakultas', 'FakultasController');
@@ -30,8 +32,6 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::resource('barang', 'BarangController');
 	});
 	Route::resource('barang', 'BarangController', ['only' => ['index','edit','update']]);
-	Route::get('dashboard', function () {
-	    return view('dashboard.index');
-	})->name('dashboard');
+	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 });
 

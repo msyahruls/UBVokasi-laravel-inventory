@@ -2,29 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Fakultas;
-use App\Http\Controllers\Controller;
-use App\Exports\FakultasExport;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use App\Fakultas;
+use App\Jurusan;
+use App\Ruangan;
+use App\Barang;
 
-class FakultasController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        //pagination
-        // numbering
-        $data = Fakultas::when($request->search, function($query) use($request){
-            $query->where('name', 'LIKE', '%'.$request->search.'%');
-        })->orderBy('name','asc')->paginate(10); 
-
-        return view('fakultas.index',compact('data'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+        $fak = Fakultas::count();
+        $jur = Jurusan::count();
+        $rua = Ruangan::count();
+        $bar = Barang::count();
+        return view('dashboard.index', compact('fak','jur','rua','bar'));
     }
 
     /**
@@ -34,7 +31,7 @@ class FakultasController extends Controller
      */
     public function create()
     {
-        return view('fakultas.create');
+        //
     }
 
     /**
@@ -45,13 +42,7 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
-  
-        Fakultas::create($request->all());
-        return redirect()->route('fakultas.index')
-                        ->with('success','Fakultas created successfully.');
+        //
     }
 
     /**
@@ -73,8 +64,7 @@ class FakultasController extends Controller
      */
     public function edit($id)
     {
-        $data = Fakultas::find($id);
-        return view('fakultas.edit',compact('data'));
+        //
     }
 
     /**
@@ -86,8 +76,7 @@ class FakultasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Fakultas::whereId($id)->update(['name' => $request->name]);
-        return redirect()->route('fakultas.index');
+        //
     }
 
     /**
@@ -98,12 +87,6 @@ class FakultasController extends Controller
      */
     public function destroy($id)
     {
-        Fakultas::whereId($id)->delete();
-        return redirect()->route('fakultas.index');
-    }
-
-    public function export()
-    {
-        return Excel::download(new FakultasExport, 'fakultas-'.date("Y-m-d").'.xlsx');
+        //
     }
 }

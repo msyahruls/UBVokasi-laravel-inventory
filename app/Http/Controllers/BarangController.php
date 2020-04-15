@@ -25,7 +25,7 @@ class BarangController extends Controller
             ->select('ruangan.name AS ruangan_name', 'barang.*')
             ->orderBy('ruangan.name','asc')
             ->orderBy('barang.name','asc')
-            ->with('ruangan')->with('create_by')->with('update_by')->paginate(10);
+            ->with('ruangan','create_by','update_by')->paginate(10);
 
         return view('barang.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);

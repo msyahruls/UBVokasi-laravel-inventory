@@ -8,36 +8,68 @@
   </div>
 
   <div class="section-body">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <form method="GET" class="form-inline">
-              <div class="form-group">
-                <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request()->get('search') }}">
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-light">Search</button>
-              </div>
-            </form>
-            <a href="{{ route('barang.index') }}" class="pull-right">
-              <button type="button" class="btn btn-outline-info">All Data</button>
-            </a>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-success">
+            <i class="fas fa-square"></i> 
           </div>
-          @if(auth()->user()->role == 'admin')
-          <div class="card-header">
-            <a href="{{ route('barang.create') }}">
-              <button type="button" class="btn btn-primary">Add New</button>
-            </a>
-          </div>
-          @endif
-          
-          <div class="card-footer text-right">
-            <nav class="d-inline-block">
-              
-            </nav>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Fakultas</h4>
+            </div>
+            <div class="card-body">
+              {{$fak}}
+            </div>
           </div>
         </div>
-      </div>  
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-warning">
+            <i class="fas fa-square"></i> 
+          </div>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Jurusan</h4>
+            </div>
+            <div class="card-body">
+              {{$jur}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-info">
+            <i class="fas fa-square"></i>
+          </div>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Ruangan</h4>
+            </div>
+            <div class="card-body">
+              {{$rua}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-primary">
+            <i class="fas fa-square"></i>
+          </div>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Barang</h4>
+            </div>
+            <div class="card-body">
+              {{$bar}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
   </div>
 
 </section>

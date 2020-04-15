@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Ruangan;
 use App\Jurusan;
+use App\Exports\RuanganExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class RuanganController extends Controller
@@ -110,5 +112,10 @@ class RuanganController extends Controller
     {
         Ruangan::whereId($id)->delete();
         return redirect()->route('ruangan.index');
+    }
+
+    public function export()
+    {
+        return Excel::download(new RuanganExport, 'ruangan-'.date("Y-m-d").'.xlsx');
     }
 }

@@ -26,7 +26,8 @@ class JurusanController extends Controller
             ->join('fakultas', 'fakultas.id', '=', 'jurusan.fakultas_id')
             ->select('fakultas.name AS fakultas_name', 'jurusan.*')
             ->orderBy('fakultas.name','asc')
-            ->orderBy('jurusan.name','asc')->paginate(10);
+            ->orderBy('jurusan.name','asc')
+            ->with('fakultas')->paginate(10);
 
         return view('jurusan.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
@@ -57,7 +58,6 @@ class JurusanController extends Controller
         ]);
   
         Jurusan::create($request->all());
-   
         return redirect()->route('jurusan.index')
                         ->with('success','Jurusan created successfully.');
     }
@@ -120,6 +120,5 @@ class JurusanController extends Controller
     public function export()
     {
         return Excel::download(new JurusanExport, 'jurusan-'.date("Y-m-d").'.xlsx');
-        // return Excel::download(new JurusanExport, 'Jur.xlsx')/;
     }
 }

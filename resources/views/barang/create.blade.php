@@ -4,7 +4,7 @@
 <section class="section">
   
   <div class="section-header">
-    <h1>Category <small>Add Data</small></h1>
+    <h1>Barang <small>Add Data</small></h1>
   </div>
 
   <div class="section-body">
