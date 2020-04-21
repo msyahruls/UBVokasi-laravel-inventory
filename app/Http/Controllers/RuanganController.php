@@ -93,13 +93,19 @@ class RuanganController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'jurusan_id' => 'required'
+        ]);
+
         $form_data = array(
             'name'      =>  $request->name,
             'jurusan_id'  =>  $request->jurusan_id
         );
 
         Ruangan::whereId($id)->update($form_data);
-        return redirect()->route('ruangan.index');
+        return redirect()->route('ruangan.index')
+            ->with('success','Ruangan updated successfully.');
     }
 
     /**
@@ -111,7 +117,8 @@ class RuanganController extends Controller
     public function destroy($id)
     {
         Ruangan::whereId($id)->delete();
-        return redirect()->route('ruangan.index');
+        return redirect()->route('ruangan.index')
+            ->with('success','Ruangan deleted successfully.');
     }
 
     public function export()

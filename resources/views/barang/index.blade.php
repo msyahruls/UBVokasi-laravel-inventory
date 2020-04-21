@@ -7,6 +7,16 @@
     <h1>Barang</h1>
   </div>
 
+    @if ($message = Session::get('success'))
+      <div class="card">
+          <div class="card-body">
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+          </div>
+      </div>
+    @endif
+
   <div class="section-body">
     <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
@@ -36,6 +46,7 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Name</th>
                     <th scope="col">Ruangan</th>
                     <th scope="col">Total</th>
@@ -49,13 +60,14 @@
                   @forelse($data as $barang)
                   <tr>
                     <td width="5%">{{ ++$i }}</td>
+                    <td width="15%" style="padding-top: 5px; padding-bottom: 5px; padding-right: auto; padding-left: auto; "><img src="{{ url('/') }}/images/barang/{{ $barang->image }}" class="img-thumbnail" /></td>
                     <td>{{ $barang->name }}</td>
-                    <td width="35%">{{ $barang->ruangan->name }}</td>
+                    <td width="15%">{{ $barang->ruangan->name }}</td>
                     <td width="5%">{{ $barang->total }}</td>
                     <td width="5%">{{ $barang->broken }}</td>
-                    <td width="">{{ $barang->create_by->name }}</td>
-                    <td width="">{{ $barang->update_by->name }}</td>
-                    <td width="">
+                    <td width="17%">{{ $barang->create_by->name }}</td>
+                    <td width="17%">{{ $barang->update_by->name }}</td>
+                    <td width="5%">
                       <form action="{{ route('barang.destroy', $barang->id) }}" method="POST">
                       <div class="btn-group">
                         <a class="btn btn-sm btn-warning view_modal color" href="{{ route('barang.edit', $barang->id) }}"><i class="fas fa-pen"></i></a>

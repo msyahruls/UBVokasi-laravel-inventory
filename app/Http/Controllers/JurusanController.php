@@ -54,7 +54,7 @@ class JurusanController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'fakultas_id' => 'required',
+            'fakultas_id' => 'required'
         ]);
   
         Jurusan::create($request->all());
@@ -95,13 +95,19 @@ class JurusanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'fakultas_id' => 'required'
+        ]);
+
         $form_data = array(
             'name'      =>  $request->name,
             'fakultas_id'  =>  $request->fakultas_id
         );
 
         Jurusan::whereId($id)->update($form_data);
-        return redirect()->route('jurusan.index');
+        return redirect()->route('jurusan.index')
+            ->with('success','Jurusan updated successfully.');
     }
 
     /**
@@ -113,8 +119,8 @@ class JurusanController extends Controller
     public function destroy($id)
     {
         Jurusan::whereId($id)->delete();
-
-        return redirect()->route('jurusan.index');
+        return redirect()->route('jurusan.index')
+            ->with('success','Jurusan deleted successfully.');
     }
 
     public function export()

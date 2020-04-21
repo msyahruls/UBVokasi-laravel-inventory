@@ -19,6 +19,21 @@
               </button>
             </a>
           </div>
+
+          @if (count($errors) > 0)
+            <div class="card col-lg-6">
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+          @endif
+          
           <div class="card-body">
             <form action="{{ route('jurusan.update', $data->id) }}" method="POST" enctype="multipart/form-data">
               @csrf

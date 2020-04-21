@@ -15,8 +15,23 @@
               <button type="button" class="btn btn-outline-info">
                 <i class="fas fa-arrow-circle-left"></i> Back
               </button>
-          </a>
+            </a>
           </div>
+
+          @if (count($errors) > 0)
+            <div class="card col-lg-6">
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+          @endif
+
           <div class="card-body">
             <form action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
@@ -39,6 +54,13 @@
               <div class="form-group">
                 <label>Broken</label>
                 <input type="number" name="broken" class="form-control" min="0" value="0">
+              </div>
+              <div class="form-group">
+                  <label>Image</label>
+                  <div id="image-preview" class="image-preview">
+                    <label for="image-upload" id="image-label">Choose File</label>
+                    <input type="file" name="image" id="customFile">
+                  </div>
               </div>
               <input type="hidden" name="created_by" class="form-control" value="{{ auth()->user()->id }}">
               <input type="hidden" name="updated_by" class="form-control" value="{{ auth()->user()->id }}">

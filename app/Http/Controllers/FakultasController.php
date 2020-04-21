@@ -86,8 +86,12 @@ class FakultasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
         Fakultas::whereId($id)->update(['name' => $request->name]);
-        return redirect()->route('fakultas.index');
+        return redirect()->route('fakultas.index')
+            ->with('success','Fakultas created successfully.');
     }
 
     /**
@@ -99,7 +103,8 @@ class FakultasController extends Controller
     public function destroy($id)
     {
         Fakultas::whereId($id)->delete();
-        return redirect()->route('fakultas.index');
+        return redirect()->route('fakultas.index')
+            ->with('success','Fakultas deleted successfully.');
     }
 
     public function export()
