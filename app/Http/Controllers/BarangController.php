@@ -117,7 +117,7 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         $image_name = $request->hidden_image;
-        $image = $request->file('image\barang');
+        $image = $request->file('image');
         if($image != ''){
             $request->validate([
                 'ruangan_id'=> 'required',
@@ -150,6 +150,7 @@ class BarangController extends Controller
             'ruangan_id'    =>  $request->ruangan_id,
             'total'         =>  $request->total,
             'broken'        =>  $request->broken,
+            'image'         =>  $image_name,
             'updated_by'    =>  $request->updated_by
         );
 

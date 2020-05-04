@@ -44,7 +44,8 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Faculcity</th>
+                  <th scope="col">Fakultas</th>
+                  <th scope="col">Ruangan</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -54,6 +55,7 @@
                   <td width="5%">{{ ++$i }}</td>
                   <td>{{ $jurusan->name }}</td>
                   <td>{{ $jurusan->fakultas->name }}</td>
+                  <td width="5%">{{ $jurusan->ruangan->count() }}</td>
                   <td width="15%">
                     <form action="{{ route('jurusan.destroy', $jurusan->id) }}" method="POST">
                       <div class="btn-group">

@@ -3,15 +3,30 @@
 namespace App\Exports;
 
 use App\Barang;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+// use Maatwebsite\Excel\Concerns\FromCollection;
 
-class BarangExport implements FromCollection
+// class BarangExport implements FromCollection
+// {
+//     *
+//     * @return \Illuminate\Support\Collection
+    
+//     public function collection()
+//     {
+//         return Barang::all();
+//     }
+
+// }
+
+class BarangExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return Barang::all();
+        return view('exports.barang', [
+        	'i'		=> 0,
+            'data' 	=> Barang::all()
+        ]);
     }
 }
+
