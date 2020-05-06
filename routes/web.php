@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('ruangan/export', 'RuanganController@export')->name('ruangan.export');
 		Route::get('barang/export', 'BarangController@export')->name('barang.export');
 
+		Route::post('fakultas/import', 'FakultasController@import')->name('fakultas.import');
+
 		Route::resource('fakultas', 'FakultasController');
 		Route::resource('jurusan', 'JurusanController');
 		Route::resource('ruangan', 'RuanganController');

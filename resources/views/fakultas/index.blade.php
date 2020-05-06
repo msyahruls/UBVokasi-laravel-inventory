@@ -34,9 +34,16 @@
             <a href="{{ route('fakultas.index') }}" class="pull-right btn btn-outline-info">All Data</a>
           </div>
           <div class="card-header">
-            <a class="btn btn-primary" href="{{ route('fakultas.create') }}"><i class="fa fa-plus"></i> Add New</button></a>
-            &nbsp;
-            <a class="btn btn-success" href="{{ route('fakultas.export') }}"><i class="fa fa-print"></i> Export Data</a>
+            <div class="col-4 col-md-4 col-lg-4">
+              <a class="btn btn-primary" href="{{ route('fakultas.create') }}"><i class="fa fa-plus"></i> Add New</button></a>
+            </div>
+            <div class="col-8 col-md-8 col-lg-8">
+              <div class="float-right">
+                <button class="btn btn-outline-success" href="#" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-file-upload"></i> Import</button>
+                {{-- &nbsp; --}}
+                <a class="btn btn-outline-success" href="{{ route('fakultas.export') }}"><i class="fa fa-file-download"></i> Export</a>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <table class="table table-bordered">
@@ -81,6 +88,35 @@
         </div>
       </div>  
   </div>
-
 </section>
-@endsection()
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="{{ route('fakultas.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Fakultas <small>Import Data</small></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label>Excel File</label>
+              {{-- <input type="file" name="file" class="form-control"> --}}
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" name="file" required="required">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Import</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection

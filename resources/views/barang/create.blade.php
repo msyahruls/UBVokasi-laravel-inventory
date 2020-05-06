@@ -57,9 +57,13 @@
               </div>
               <div class="form-group">
                   <label>Image</label>
-                  <div id="image-preview" class="image-preview">
+                  {{-- <div id="image-preview" class="image-preview">
                     <label for="image-upload" id="image-label">Choose File</label>
                     <input type="file" name="image" id="customFile">
+                  </div> --}}
+                  <div class="custom-file">
+                    <input type="file" name="image" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
                   </div>
               </div>
               <input type="hidden" name="created_by" class="form-control" value="{{ auth()->user()->id }}">
@@ -67,7 +71,7 @@
               <div class="form-group">
                 <button type="submit" class="btn btn-primary">SAVE</button>
               </div>
-              </form>
+            </form>
           </div>
         </div>
       </div>  
