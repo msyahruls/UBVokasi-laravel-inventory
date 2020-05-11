@@ -85,4 +85,4 @@
   </div>
 
 </section>
-@endsection()
+@endsection

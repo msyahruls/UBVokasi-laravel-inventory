@@ -43,8 +43,9 @@
 
 	<!-- Favicons
 	================================================== -->
-	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="shortcut icon" href="images/favicon.png">
 	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    @laravelPWA
 
 </head>
 

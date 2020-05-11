@@ -12,9 +12,10 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('landing');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('landing');
+Route::get('/', 'WelcomeController@index')->name('landing');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/mail', 'MailController@send')->name('mail');
 
