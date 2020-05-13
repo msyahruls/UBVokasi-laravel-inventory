@@ -21,21 +21,31 @@ class WelcomeController extends Controller
         $jur = Jurusan::count();
         $rua = Ruangan::count();
         $bar = Barang::count();
+        $tot = Barang::sum('total');
+        $brk = Barang::sum('broken');
         
         $data = Barang::when($request->search, function($query) use($request){
-            $query->where('ruangan.name', 'LIKE', '%'.$request->search.'%');
+            $query->where('barang_name', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('ruangan_name', 'LIKE', "%{$request->search}%")
+                ->orWhere('jurusan_name', 'LIKE', "%{$request->search}%")
+                ->orWhere('fakultas_name', 'LIKE', "%{$request->search}%");
         })
         ->join('ruangan', 'ruangan.id', '=', 'barang.ruangan_id')
         ->join('jurusan', 'jurusan.id', '=', 'ruangan.jurusan_id')
         ->join('fakultas', 'fakultas.id', '=', 'jurusan.fakultas_id')
-        ->select('ruangan.name AS ruangan_name', 'jurusan.name AS jurusan_name', 'fakultas.name AS fakultas_name', 'barang.*')
-        ->orderBy('fakultas.name','asc')
-        ->orderBy('jurusan.name','asc')
-        ->orderBy('ruangan.name','asc')
-        ->orderBy('barang.name','asc')
+        ->select('ruangan.name AS ruangan_name', 
+                'jurusan.name AS jurusan_name',
+                'fakultas.name AS fakultas_name',
+                'barang.name AS barang_name',
+                'barang.*'
+        )
+        ->orderBy('fakultas_name','asc')
+        ->orderBy('jurusan_name','asc')
+        ->orderBy('ruangan_name','asc')
+        ->orderBy('barang_name','asc')
         ->with('ruangan','create_by','update_by')->paginate(25);
 
-        return view('welcome', compact('fak','jur','rua','bar','data'))
+        return view('welcome', compact('fak','jur','rua','bar','tot','brk','data'))
         	->with('i', (request()->input('page', 1) - 1) * 25);
     }
 }
