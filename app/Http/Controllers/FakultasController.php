@@ -110,10 +110,6 @@ class FakultasController extends Controller
 
     public function import(Request $request)
     {
-        // dd($request);
-        // $this->validate($request, [
-        //     'file' => 'required|mimes:csv,xls,xlsx'
-        // ]);
         $file = $request->file('file');
         $filename = rand().$file->getClientOriginalName();
         $file->move('excel/fakultas',$filename);

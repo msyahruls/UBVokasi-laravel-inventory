@@ -1,8 +1,8 @@
 @extends('layouts.adminmain')
 
 @section('content')
+
 <section class="section">
-  
   <div class="section-header">
     <h1>Barang</h1>
   </div>
@@ -33,12 +33,31 @@
             &nbsp;
             <a href="{{ route('barang.index') }}" class="pull-right btn btn-outline-info">All Data</a>
           </div>
-          <div class="card-header">
+          {{-- <div class="card-header">
           @if(auth()->user()->role == 'admin')
             <a class="btn btn-primary" href="{{ route('barang.create') }}"><i class="fa fa-plus"></i> Add New</a>
             &nbsp;
           @endif
             <a class="btn btn-success" href="{{ route('barang.export') }}"><i class="fa fa-print"></i> Export Data</a>
+          </div> --}}
+          <div class="card-header">
+            @if(auth()->user()->role == 'admin')
+            <div class="col-4 col-md-4 col-lg-4">
+              <a class="btn btn-primary" href="{{ route('barang.create') }}"><i class="fa fa-plus"></i> Add New</button></a>
+            </div>
+            <div class="col-8 col-md-8 col-lg-8">
+              <div class="float-right">
+                {{-- <button class="btn btn-outline-success" href="#" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-file-upload"></i> Import</button> --}}
+                <a class="btn btn-outline-success" href="{{ route('barang.export') }}"><i class="fa fa-file-download"></i> Export</a>
+              </div>
+            </div>
+            @else
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="float-right">
+                <a class="btn btn-outline-success" href="{{ route('barang.export') }}"><i class="fa fa-file-download"></i> Export</a>
+              </div>
+            </div>
+            @endif
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -97,6 +116,6 @@
         </div>
     </div>  
   </div>
-
 </section>
-@endsection()
+
+@endsection

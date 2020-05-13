@@ -1,8 +1,8 @@
 @extends('layouts.adminmain')
 
 @section('content')
+
 <section class="section">
-  
   <div class="section-header">
     <h1>Fakultas <small>Add Data</small></h1>
   </div>
@@ -47,6 +47,6 @@
         </div>
       </div>  
   </div>
-
 </section>
-@endsection()
+
+@endsection

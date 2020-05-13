@@ -14,4 +14,9 @@ class Ruangan extends Model
     {
     	return $this->belongsTo('App\Jurusan', 'jurusan_id', 'id');
     }
+
+    public function barang()
+    {
+    	return $this->hasMany('App\Barang','ruangan_id','id');
+    }
 }

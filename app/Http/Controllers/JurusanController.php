@@ -22,12 +22,14 @@ class JurusanController extends Controller
         // numbering
 
         $data = Jurusan::when($request->search, function($query) use($request){
-            $query->where('fakultas.name', 'LIKE', '%'.$request->search.'%');})
-            ->join('fakultas', 'fakultas.id', '=', 'jurusan.fakultas_id')
-            ->select('fakultas.name AS fakultas_name', 'jurusan.*')
-            ->orderBy('fakultas.name','asc')
-            ->orderBy('jurusan.name','asc')
-            ->with('fakultas')->paginate(10);
+            $query->where('fakultas.name', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('jurusan.name','LIKE', '%'.$request->search.'%');
+        })
+        ->join('fakultas', 'fakultas.id', '=', 'jurusan.fakultas_id')
+        ->select('fakultas.name AS fakultas_name', 'jurusan.*')
+        ->orderBy('fakultas.name','asc')
+        ->orderBy('jurusan.name','asc')
+        ->with('fakultas')->paginate(10);
 
         return view('jurusan.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
@@ -121,6 +123,16 @@ class JurusanController extends Controller
         Jurusan::whereId($id)->delete();
         return redirect()->route('jurusan.index')
             ->with('success','Jurusan deleted successfully.');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+        $filename = rand().$file->getClientOriginalName();
+        $file->move('excel/jurusan',$filename);
+        Excel::import(new JurusanImport, public_path('/excel/jurusan/'.$filename));
+        return redirect()->route('jurusan.index')
+            ->with('success','Jurusan imported successfully.');
     }
 
     public function export()

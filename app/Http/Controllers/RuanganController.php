@@ -20,11 +20,13 @@ class RuanganController extends Controller
         //pagination
         // numbering
         $data = Ruangan::when($request->search, function($query) use($request){
-            $query->where('jurusan.name', 'LIKE', '%'.$request->search.'%');})
-            ->join('jurusan', 'jurusan.id', '=', 'ruangan.jurusan_id')
-            ->select('jurusan.name AS jurusan_name', 'ruangan.*')
-            ->orderBy('jurusan.name','asc')->orderBy('ruangan.name','asc')
-            ->with('jurusan')->paginate(10); 
+            $query->where('jurusan.name', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('ruangan.name','LIKE', '%'.$request->search.'%');
+        })
+        ->join('jurusan', 'jurusan.id', '=', 'ruangan.jurusan_id')
+        ->select('jurusan.name AS jurusan_name', 'ruangan.*')
+        ->orderBy('jurusan.name','asc')->orderBy('ruangan.name','asc')
+        ->with('jurusan')->paginate(10); 
 
         return view('ruangan.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
@@ -119,6 +121,16 @@ class RuanganController extends Controller
         Ruangan::whereId($id)->delete();
         return redirect()->route('ruangan.index')
             ->with('success','Ruangan deleted successfully.');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+        $filename = rand().$file->getClientOriginalName();
+        $file->move('excel/ruangan',$filename);
+        Excel::import(new ruanganImport, public_path('/excel/ruangan/'.$filename));
+        return redirect()->route('ruangan.index')
+            ->with('success','Ruangan imported successfully.');
     }
 
     public function export()
